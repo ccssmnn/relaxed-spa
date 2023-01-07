@@ -1,6 +1,6 @@
 # Relaxed SPA
 
-Lets build a modern full stack SPA, but skip some tooling.
+Lets build a modern full stack SPA, but skip the complicated tooling.
 
 ## Tools
 
@@ -43,9 +43,12 @@ We can skip lots of tooling & vscode-extensions
 
 This is not done. How far can we get?
 
+- fingerprinting and proper cache headers for the client bundle
+- Reload the app when the server restarts
+- example testing setup
 - Component testing?
 - End-to-End testing?
-- Reload the app when the server restarts
+- Add Supabase?
 
 ## License
 

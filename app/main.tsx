@@ -1,10 +1,11 @@
 import install from "@twind/with-react";
-import React from "react";
+import React, { ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ActionFunctionArgs,
   createBrowserRouter,
   Form,
+  Link,
   RouterProvider,
   useLoaderData,
   useNavigation,
@@ -30,6 +31,14 @@ async function action({ request }: ActionFunctionArgs) {
     await trpc.decrement.mutate({ amount: 1 });
   }
   return null;
+}
+
+function ExternalLink({ to, children }: { to: string; children: ReactNode }) {
+  return (
+    <a href={to} className="text-indigo-600 underline hover:text-indigo-500">
+      {children}
+    </a>
+  );
 }
 
 function App() {
@@ -69,11 +78,26 @@ function App() {
       <h2 className="text-2xl font-semibold">What is going on here?</h2>
       <p>Your seeing a React Single Page Application with server side state:</p>
       <ul className="list-disc text-left">
-        <li>powered by Deno</li>
-        <li>with an API server backed by trpc</li>
-        <li>using utility classes powered by twind</li>
-        <li>built on the fly with esbuild</li>
+        <li>powered by Deno deployed on Deno Deploy</li>
+        <li>
+          with an API server backed by{" "}
+          <ExternalLink to="https://trpc.io">trpc</ExternalLink>
+        </li>
+        <li>
+          using utility classes powered by{" "}
+          <ExternalLink to="https://twind.style">twind</ExternalLink>
+        </li>
+        <li>
+          and the client bundle built on the fly with{" "}
+          <ExternalLink to="https://esbuild.github.io">esbuild</ExternalLink>
+        </li>
       </ul>
+      <p>
+        Checkout the source code on GitHub{" "}
+        <ExternalLink to="https://github.com/ccssmnn/relaxed-spa">
+          ccssmnn/relaxed-spa
+        </ExternalLink>
+      </p>
     </div>
   );
 }
@@ -83,6 +107,15 @@ function NotFound() {
     <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
       <img src="/favicon.ico" className="mx-auto" />
       <h1 className="font-bold text-3xl">404 - Not Found</h1>
+      <p>
+        Go back{" "}
+        <Link
+          to="/"
+          className="text-indigo-600 underline hover:text-indigo-500"
+        >
+          Home
+        </Link>
+      </p>
     </div>
   );
 }
