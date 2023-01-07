@@ -2,6 +2,8 @@
 
 Lets build a modern full stack SPA, but skip the complicated tooling.
 
+To start locally, clone the repo and run `deno task dev`.
+
 ## Tools
 
 - Deno is the No-Build, No-Install, Fast and Secure Typescript and JSX
@@ -15,24 +17,25 @@ Lets build a modern full stack SPA, but skip the complicated tooling.
 
 - avoid a build step
 - ready for Deno Deploy
-- keep full control over the server (as few abstractions as possible)
-- keep dev-experience as close to production experience as possible
+- keep full control about request handling (as few abstractions as possible)
+- gradual disclosure of complexity
 
 ## Advantages
 
-We can skip lots of tooling & vscode-extensions
+Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 
 - no install step
 - no build step (ultra fast deployments)
-- write the scripts you may need in typescript & execute in deno
-- just-in-time client bundle generation (~~vite~~ ➡️ esbuild)
-- Tailwind-in-JS (~~postcss~~)
+- write the scripts you may need in typescript & execute in deno (think database
+  seeding)
+- just-in-time client bundle generation (esbuild)
+- Tailwind-in-JS (no postcss / autoprefixer)
 - Built in testing
-- Built in TypeScript support (~~tsc~~)
-- Built in linting (~~eslint~~ + vscode extension)
-- Built in formatter (~~prettier~~ + vscode extension)
-- Built in server (~~express~~)
-- Build in file-watching (~~nodemon~~)
+- Built in TypeScript support (no extra tsc dependency)
+- Built in linting (no eslint + config + vscode extension)
+- Built in formatter (no prettier + vscode extension)
+- Built in server (no express, but you can always opt-in if you like)
+- Build in file-watching (no nodemon)
 
 ## Caveats
 
@@ -41,7 +44,7 @@ We can skip lots of tooling & vscode-extensions
 
 ## Todo
 
-This is not done. How far can we get?
+How far can we get?
 
 - fingerprinting and proper cache headers for the client bundle
 - Reload the app when the server restarts

@@ -4,8 +4,12 @@ import { z } from "zod";
 
 const t = initTRPC.create();
 
+// count is our server side state
 let count = 0;
 
+/**
+ * the trpc route has methods for receiving and mutating the count
+ */
 const appRouter = t.router({
   getCount: t.procedure.input(() => {}).query(() => {
     return { count };
@@ -20,16 +24,19 @@ const appRouter = t.router({
     }),
 });
 
+// exporting the router type allows using the API types in the client
 export type AppRouter = typeof appRouter;
 
-/**
- * serves TRPC requests from /api
- */
-export function apiHandler(req: Request) {
-  return fetchRequestHandler({
+/** return responses to fetch requests */
+export async function apiHandler(req: Request) {
+  const res = await fetchRequestHandler({
     endpoint: "/api",
     req,
     router: appRouter,
     createContext: () => ({}),
   });
+  if (res.status === 404) {
+    return new Response("Not found", { status: 404 });
+  }
+  return res;
 }

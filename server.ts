@@ -12,7 +12,9 @@ const appBundle = await bundle(
 );
 
 serve(async (req) => {
+  // check the request path
   const path = new URL(req.url).pathname;
+  // return the bundle when the path matches
   if (path === `/${BUNDLE_NAME}`) {
     return new Response(appBundle, {
       headers: {
@@ -20,12 +22,15 @@ serve(async (req) => {
       },
     });
   }
+  // forward the request to the api handler
   if (path.startsWith("/api")) {
     return apiHandler(req);
   }
+  // serve the index.html file
   if (path === "/" || path === "/index.html") {
     return serveFile(req, "./index.html");
   }
+  // now try to serve the static files, fall back to index.html
   const res = await serveFile(req, `./public${path}`);
   if (res.status === 404) {
     return serveFile(req, "./index.html");

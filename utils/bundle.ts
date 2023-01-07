@@ -1,3 +1,8 @@
+/**
+ * This part of the code is based on the way `fresh` is bundling the code.
+ * See https://github.com/denoland/fresh/blob/main/src/server/bundle.ts
+ */
+
 // @deno-types="esbuild/mod.d.ts"
 import * as esbuildWasm from "esbuild/wasm.js";
 import { denoPlugin } from "esbuild_deno_loader/mod.ts";
