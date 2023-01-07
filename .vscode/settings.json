@@ -1,0 +1,8 @@
+{
+  "deno.enable": true,
+  "deno.unstable": true,
+  "editor.suggest.showStatusBar": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  }
+}
