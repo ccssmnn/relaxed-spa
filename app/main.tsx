@@ -7,6 +7,7 @@ import {
   Form,
   RouterProvider,
   useLoaderData,
+  useNavigation,
 } from "react-router-dom";
 import twindConfig from "../twind.config.ts";
 import { trpc } from "./trpc.ts";
@@ -33,27 +34,35 @@ async function action({ request }: ActionFunctionArgs) {
 
 function App() {
   const data = useLoaderData() as { count: number };
+  const navigation = useNavigation();
+  const incrementing = navigation.state !== "idle" &&
+    navigation.formData?.get("intent") === "increment";
+  const decrementing = navigation.state !== "idle" &&
+    navigation.formData?.get("intent") === "decrement";
+  const loading = incrementing || decrementing;
   return (
     <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
       <img src="/favicon.ico" className="mx-auto" />
       <h1 className="font-bold text-3xl">Relaxed SPA</h1>
-      <p>The current count is {data.count}</p>
+      <p>The current count (on the server) is {data.count}</p>
       <Form method="post">
         <button
-          className="px-2 py-1 rounded-md bg-gray-200 text-gray-900 mr-3"
+          className="px-2 py-1 rounded-md bg-gray-200 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 mr-3"
           name="intent"
           value="increment"
           type="submit"
+          disabled={loading}
         >
-          Increment
+          {incrementing ? "Loading..." : "Increment"}
         </button>
         <button
-          className="px-2 py-1 rounded-md bg-gray-200 text-gray-900"
+          className="px-2 py-1 rounded-md bg-gray-200 text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
           name="intent"
           value="decrement"
           type="submit"
+          disabled={loading}
         >
-          Decrement
+          {decrementing ? "Loading..." : "Decrement"}
         </button>
       </Form>
       <div className="border-t border-gray-900" />
