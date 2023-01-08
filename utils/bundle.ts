@@ -30,7 +30,7 @@ async function initEsbuild() {
 
 export async function bundle(entryPoint: string, importMapURL: URL) {
   await initEsbuild();
-  console.log("Bundling", entryPoint);
+  console.log(new Date(), "Bundling", entryPoint);
   const res = await esbuild.build({
     entryPoints: [new URL(`../${entryPoint}`, import.meta.url).href],
     bundle: true,
@@ -50,6 +50,6 @@ export async function bundle(entryPoint: string, importMapURL: URL) {
   if (res.errors.length > 0) {
     throw res.errors[0];
   }
-  console.log("Finished bundling", entryPoint);
+  console.log(new Date(), "Finished bundling", entryPoint);
   return res.outputFiles[0].text;
 }

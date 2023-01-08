@@ -6,7 +6,7 @@ import { bundle } from "./utils/bundle.ts";
 const BUNDLE_NAME = "app/main.tsx";
 
 /** generate the app bundle on server start */
-const appBundle = await bundle(
+const appBundle = bundle(
   `./${BUNDLE_NAME}`,
   new URL("./import_map.json", import.meta.url),
 );
@@ -16,7 +16,7 @@ serve(async (req) => {
   const path = new URL(req.url).pathname;
   // return the bundle when the path matches
   if (path === `/${BUNDLE_NAME}`) {
-    return new Response(appBundle, {
+    return new Response(await appBundle, {
       headers: {
         "Content-Type": "application/javascript",
       },
