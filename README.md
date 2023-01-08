@@ -49,7 +49,6 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 
 How far can we get?
 
-- fingerprinting and proper cache headers for the client bundle
 - code splitting
 - Reload the app when the server restarts
 - example testing setup

@@ -28,7 +28,7 @@ const appRouter = t.router({
 export type AppRouter = typeof appRouter;
 
 /** return responses to fetch requests */
-export async function apiHandler(req: Request) {
+export async function handleAPIRequests(req: Request) {
   const res = await fetchRequestHandler({
     endpoint: "/api",
     req,

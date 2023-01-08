@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "start": "deno run --allow-net --allow-read --allow-run --allow-write --allow-env --watch=api/,app/,utils/,twind.config.ts server.ts"
+    "start": "deno run --allow-net --allow-read --allow-run --allow-write --allow-env --watch=api/,app/,utils/,twind.config.ts server.tsx"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
