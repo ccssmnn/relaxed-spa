@@ -1,9 +1,14 @@
+import { inline, install } from "@twind/core";
 import { nanoid } from "nanoid";
 import * as ReactDOMServer from "react-dom/server";
 import { serveFile } from "std/http/file_server.ts";
 import { serve } from "std/http/server.ts";
 import { handleAPIRequests } from "./api/mod.ts";
+import config from "./twind.config.ts";
 import { bundle } from "./utils/bundle.ts";
+
+// activate twind for using it to style the index.html
+install(config);
 
 const CLIENT_ENTRY_POINT = "./app/main.tsx";
 const CLIENT_BUNDLE_PATH = `/bundle-${nanoid()}.js`;
@@ -38,11 +43,11 @@ const appBundle = bundle(
 
 function indexHTMLResponse() {
   return new Response(
-    `<!DOCTYPE html>${
+    inline(`<!DOCTYPE html>${
       ReactDOMServer.renderToString(
         <Index />,
       )
-    }`,
+    }`),
     {
       headers: {
         "Content-Type": "text/html",
