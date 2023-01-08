@@ -38,7 +38,10 @@ async function action({ request }: ActionFunctionArgs) {
 
 function ExternalLink({ to, children }: { to: string; children: ReactNode }) {
   return (
-    <a href={to} className="text-indigo-600 underline hover:text-indigo-500">
+    <a
+      href={to}
+      className="text-indigo-600 dark:text-indigo-400 underline hover:text-indigo-500 dark:hover:text-indigo-200"
+    >
       {children}
     </a>
   );
@@ -70,7 +73,7 @@ function App() {
       <p>The current count (on the server) is {data.count}</p>
       <Form method="post">
         <button
-          className="px-2 py-1 rounded-md bg-gray-200 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 mr-3"
+          className="px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 dark:text-gray-50 mr-3"
           name="intent"
           value="increment"
           type="submit"
@@ -79,7 +82,7 @@ function App() {
           {incrementing ? "Loading..." : "Increment"}
         </button>
         <button
-          className="px-2 py-1 rounded-md bg-gray-200 text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 dark:text-gray-50"
           name="intent"
           value="decrement"
           type="submit"
@@ -88,9 +91,13 @@ function App() {
           {decrementing ? "Loading..." : "Decrement"}
         </button>
       </Form>
-      <div className="border-t border-gray-900" />
+      <div className="border-t border-gray-900 dark:border-gray-50" />
       <h2 className="text-2xl font-semibold">What is going on here?</h2>
-      <p>Your seeing a React Single Page Application with server side state:</p>
+      <p>
+        Your seeing a React Single Page Application with server side state and
+        {" "}
+        <span className="underline">no build step</span>:
+      </p>
       <ul className="list-disc text-left pl-6">
         <li>
           powered by <ExternalLink to="https://deno.com">Deno</ExternalLink>

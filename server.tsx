@@ -35,7 +35,7 @@ function Index() {
         {IS_DEV && <script src={RELOAD_SCRIPT_URL} />}
         <title>Relaxed SPA</title>
       </head>
-      <body className="bg-gray-50">
+      <body className="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white">
         <div id="root"></div>
         <script src={CLIENT_BUNDLE_PATH}></script>
       </body>
