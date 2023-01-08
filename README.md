@@ -1,15 +1,15 @@
 # Relaxed SPA
 
-Lets build a modern full stack SPA, but skip the complicated tooling.
+Lets build a modern full stack SPA, but skip the complicated tooling. Checkout
+the app at [relaxed-spa.deno.dev](https://relaxed-spa.deno.dev)
 
 To start locally, clone the repo and run `deno task start`.
 
 ## Tools
 
-- Deno is the No-Build, No-Install, Fast and Secure Typescript and JSX
-  experience
-- React + React Router (>= 6.4) are a charm for client side data loading (Remix
-  vibes in your SPA)
+- Deno is a JS runtime based on web fundamentals
+- React Router (>= 6.4) has wonderful data loading APIs based on web
+  fundamentals
 - twind enables TailwindCSS-style utility classes without a build step
 - trpc + zod gets us the typesafe API
 
@@ -50,10 +50,9 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 How far can we get?
 
 - code splitting
-- Reload the app when the server restarts
 - example testing setup
-- Component testing?
-- End-to-End testing?
+  - Component testing?
+  - End-to-End testing?
 - Add Supabase?
 
 ## License

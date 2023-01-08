@@ -3,7 +3,6 @@
  * See https://github.com/denoland/fresh/blob/main/src/server/bundle.ts
  */
 
-// -- esbuild --
 // @deno-types="esbuild/mod.d.ts"
 import * as esbuildNative from "esbuild/mod.js";
 import * as esbuildWasm from "esbuild/wasm.js";

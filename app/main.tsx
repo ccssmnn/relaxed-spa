@@ -66,7 +66,7 @@ function App() {
         className="mx-auto w-48 h-48"
         alt="A cute white dinosaur on dark background looking to the left"
       />
-      <h1 className="font-bold text-3xl">Relaxed SPA</h1>
+      <h1 className="font-bold text-3xl">Super Relaxed SPA</h1>
       <p>The current count (on the server) is {data.count}</p>
       <Form method="post">
         <button
