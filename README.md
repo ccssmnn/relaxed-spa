@@ -24,7 +24,7 @@ To start locally, clone the repo and run `deno task start`.
 
 Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 
-- no install step
+- no install step (well deno does download the dependencies behind the scenes)
 - no build step (ultra fast deployments)
 - write the scripts you may need in typescript & execute in deno (think database
   seeding)
@@ -42,7 +42,6 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 
 ## Caveats
 
-- Bundles with esbuild are larger than with vite (rollup)
 - no HMR, but HMR doesn't work well with React Router 6.4 anyway
 
 ## Todo
