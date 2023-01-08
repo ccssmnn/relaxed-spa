@@ -2,7 +2,7 @@
 
 Lets build a modern full stack SPA, but skip the complicated tooling.
 
-To start locally, clone the repo and run `deno task dev`.
+To start locally, clone the repo and run `deno task start`.
 
 ## Tools
 
@@ -30,12 +30,15 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
   seeding)
 - just-in-time client bundle generation (esbuild)
 - Tailwind-in-JS (no postcss / autoprefixer)
+- easily proxy or cache requests in deno and avoid cross origin requests (e.g.
+  Supabase API requests)
 - Built in testing
 - Built in TypeScript support (no extra tsc dependency)
 - Built in linting (no eslint + config + vscode extension)
 - Built in formatter (no prettier + vscode extension)
 - Built in server (no express, but you can always opt-in if you like)
-- Build in file-watching (no nodemon)
+- Built in file-watching (no nodemon)
+- Built in compression (no compression middleware)
 
 ## Caveats
 
@@ -47,6 +50,7 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 How far can we get?
 
 - fingerprinting and proper cache headers for the client bundle
+- code splitting
 - Reload the app when the server restarts
 - example testing setup
 - Component testing?
