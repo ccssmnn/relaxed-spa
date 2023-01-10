@@ -11,13 +11,13 @@ import {
   useNavigation,
   useRouteError,
 } from "react-router-dom";
-import type { AppRouter } from "../api/trpc.ts";
+import type { AppRouter } from "../api/mod.ts";
 
 /** initialize trpc client with types from the API */
 export const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: "/trpc",
+      url: "/api/trpc",
     }),
   ],
 });
@@ -61,11 +61,9 @@ function App() {
   const navigation = useNavigation();
 
   // access current submission for loading states
-  const incrementing =
-    navigation.state !== "idle" &&
+  const incrementing = navigation.state !== "idle" &&
     navigation.formData?.get("intent") === "increment";
-  const decrementing =
-    navigation.state !== "idle" &&
+  const decrementing = navigation.state !== "idle" &&
     navigation.formData?.get("intent") === "decrement";
   const loading = incrementing || decrementing;
 
@@ -73,7 +71,7 @@ function App() {
   return (
     <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
       <img
-        src="/favicon.ico"
+        src="/public/favicon.ico"
         className="mx-auto w-48 h-48"
         alt="A cute white dinosaur on dark background looking to the left"
       />
@@ -184,6 +182,6 @@ export const router = createBrowserRouter(
     <Route errorElement={<ErrorElement />}>
       <Route path="/" element={<App />} loader={loader} action={action} />
       <Route path="*" element={<NotFoundElement />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );

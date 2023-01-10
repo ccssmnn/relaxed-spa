@@ -35,7 +35,11 @@ async function verifyEsbuildInitialized() {
   console.log(new Date(), "esbuild initialized");
 }
 
-export async function createBundle(entryPoint: URL, importMapURL: URL) {
+export async function createBundle(
+  entryPoint: URL,
+  importMapURL: URL,
+  isDev?: boolean,
+) {
   await verifyEsbuildInitialized();
   console.log(new Date(), "Bundling", entryPoint.href);
   const absWorkingDir = Deno.cwd();
@@ -44,7 +48,8 @@ export async function createBundle(entryPoint: URL, importMapURL: URL) {
     entryPoints: [entryPoint.href],
     platform: "neutral",
     treeShaking: true,
-    minify: true,
+    minify: !isDev,
+    sourcemap: isDev ? "inline" : false,
     outfile: "",
     absWorkingDir,
     outdir: ".",

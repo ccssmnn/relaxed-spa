@@ -1,5 +1,6 @@
 import { initTRPC } from "@trpc/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { Hono } from "hono/mod.ts";
 import { z } from "zod";
 
 const t = initTRPC.create();
@@ -27,16 +28,15 @@ const appRouter = t.router({
 // exporting the router type allows using the API types in the client
 export type AppRouter = typeof appRouter;
 
-/** return responses to fetch requests */
-export async function handleTrpcRequests(endpoint: string, req: Request) {
-  const res = await fetchRequestHandler({
-    endpoint,
-    req,
+const app = new Hono();
+
+app.all("/trpc/*", (c) => {
+  return fetchRequestHandler({
+    req: new Request(c.req),
+    endpoint: "/api/trpc",
     router: appRouter,
     createContext: () => ({}),
   });
-  if (res.status === 404) {
-    return new Response("Not found", { status: 404 });
-  }
-  return res;
-}
+});
+
+export const api = app;
