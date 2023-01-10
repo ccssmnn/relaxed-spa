@@ -4,7 +4,7 @@
  * See https://github.com/denoland/fresh/blob/main/src/server/context.ts#L385
  */
 
-const BUILD_ID = crypto.randomUUID();
+const BUILD_UUID = crypto.randomUUID();
 
 /**
  * returns a script that creates an eventlistener on reloadUrl and trigger a
@@ -14,7 +14,7 @@ export function returnReloadScript(reloadUrl: string) {
   const js = `
 new EventSource("${reloadUrl}")
   .addEventListener("message", function listener(e) {
-    if (e.data !== "${BUILD_ID}") {
+    if (e.data !== "${BUILD_UUID}") {
       this.removeEventListener('message', listener);
       location.reload();
     } 
@@ -36,9 +36,9 @@ export function returnReloadEventStream() {
   let timerId: number | undefined = undefined;
   const body = new ReadableStream({
     start(controller) {
-      controller.enqueue(`data: ${BUILD_ID}\nretry: 100\n\n`);
+      controller.enqueue(`data: ${BUILD_UUID}\nretry: 100\n\n`);
       timerId = setInterval(() => {
-        controller.enqueue(`data: ${BUILD_ID}\n\n`);
+        controller.enqueue(`data: ${BUILD_UUID}\n\n`);
       }, 1000);
     },
     cancel() {
