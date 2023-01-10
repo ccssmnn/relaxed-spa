@@ -1,6 +1,8 @@
 {
   "deno.enable": true,
   "deno.unstable": true,
+  "deno.config": "./deno.json",
+  "deno.suggest.imports.hosts": {},
   "editor.suggest.showStatusBar": true,
   "editor.quickSuggestions": {
     "strings": true

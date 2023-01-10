@@ -1,20 +1,26 @@
-import install from "@twind/with-react";
-import React, { ReactNode } from "react";
-import { createRoot } from "react-dom/client";
+import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import type { ReactNode } from "react";
 import {
   ActionFunctionArgs,
   createBrowserRouter,
+  createRoutesFromElements,
   Form,
   Link,
-  RouterProvider,
+  Route,
   useLoaderData,
   useNavigation,
+  useRouteError,
 } from "react-router-dom";
-import twindConfig from "../twind.config.ts";
-import { trpc } from "./trpc.ts";
+import type { AppRouter } from "../api/trpc.ts";
 
-// initialize twind
-install(twindConfig);
+/** initialize trpc client with types from the API */
+export const trpc = createTRPCProxyClient<AppRouter>({
+  links: [
+    httpBatchLink({
+      url: "/trpc",
+    }),
+  ],
+});
 
 // loader receives data when react-router is prerendering the page
 async function loader() {
@@ -55,9 +61,11 @@ function App() {
   const navigation = useNavigation();
 
   // access current submission for loading states
-  const incrementing = navigation.state !== "idle" &&
+  const incrementing =
+    navigation.state !== "idle" &&
     navigation.formData?.get("intent") === "increment";
-  const decrementing = navigation.state !== "idle" &&
+  const decrementing =
+    navigation.state !== "idle" &&
     navigation.formData?.get("intent") === "decrement";
   const loading = incrementing || decrementing;
 
@@ -92,18 +100,18 @@ function App() {
         </button>
       </Form>
       <div className="border-t border-gray-900 dark:border-gray-50" />
+      <p>
+        Modern tooling and web standards are so good. You might not need a
+        framework to build a great SPA. Bring your own everything.
+      </p>
       <h2 className="text-2xl font-semibold">What is going on here?</h2>
       <p>
-        Your seeing a React Single Page Application with server side state and
-        {" "}
-        <span className="underline">no build step</span>:
+        This is a React SPA with API Routes, written in TypeScript and deployed
+        without a build step.
       </p>
       <ul className="list-disc text-left pl-6">
         <li>
           powered by <ExternalLink to="https://deno.com">Deno</ExternalLink>
-          {" "}
-          deployed on{" "}
-          <ExternalLink to="https://deno.com/deploy">Deno Deploy</ExternalLink>
         </li>
         <li>
           using{" "}
@@ -111,10 +119,6 @@ function App() {
             React Router's
           </ExternalLink>{" "}
           new data apis
-        </li>
-        <li>
-          with an API server backed by{" "}
-          <ExternalLink to="https://trpc.io">trpc</ExternalLink>
         </li>
         <li>
           using TailwindCSS-like utility classes powered by{" "}
@@ -135,7 +139,7 @@ function App() {
   );
 }
 
-function NotFound() {
+function NotFoundElement() {
   return (
     <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
       <img src="/favicon.ico" className="mx-auto" />
@@ -153,21 +157,33 @@ function NotFound() {
   );
 }
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    action,
-    loader,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
-  },
-]);
+function ErrorElement() {
+  const error = useRouteError();
+  console.error(error);
+  return (
+    <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
+      <img src="/favicon.ico" className="mx-auto" />
+      <h1 className="font-bold text-3xl text-red-600">
+        Ups, something went wrong
+      </h1>
+      <p>
+        Go back{" "}
+        <Link
+          to="/"
+          className="text-indigo-600 underline hover:text-indigo-500"
+        >
+          Home
+        </Link>
+      </p>
+    </div>
+  );
+}
 
-createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route errorElement={<ErrorElement />}>
+      <Route path="/" element={<App />} loader={loader} action={action} />
+      <Route path="*" element={<NotFoundElement />} />
+    </Route>
+  )
 );

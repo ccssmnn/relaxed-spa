@@ -1,11 +1,12 @@
 {
   "tasks": {
-    "start": "deno run --allow-net --allow-read --allow-run --allow-write --allow-env --watch=api/,app/,utils/,twind.config.ts server.tsx"
+    "start": "deno run --allow-net --allow-read --allow-run --allow-write --allow-env --watch=api/,app/,twind.config.ts server.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "lib": ["dom", "esnext", "deno.ns"]
+    "lib": ["dom", "esnext", "deno.ns"],
+    "strict": true
   }
 }

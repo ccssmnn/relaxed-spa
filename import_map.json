@@ -9,7 +9,6 @@
     "@twind/with-react": "https://esm.sh/@twind/with-react@1.1.2",
     "esbuild_deno_loader/": "https://deno.land/x/esbuild_deno_loader@0.5.2/",
     "esbuild/": "https://deno.land/x/esbuild@v0.14.51/",
-    "nanoid": "https://esm.sh/nanoid@4.0.0",
     "react-dom": "https://esm.sh/react-dom@18.2.0",
     "react-dom/": "https://esm.sh/react-dom@18.2.0/",
     "react-router-dom": "https://esm.sh/react-router-dom@6.6.1",
