@@ -3,10 +3,11 @@
  * See https://github.com/denoland/fresh/blob/main/src/server/bundle.ts
  */
 
-// @deno-types="esbuild/mod.d.ts"
-import * as esbuildNative from "esbuild/mod.js";
-import * as esbuildWasm from "esbuild/wasm.js";
-import { denoPlugin } from "esbuild_deno_loader/mod.ts";
+// @deno-types="https://deno.land/x/esbuild@v0.14.51/mod.d.ts"
+import * as esbuildNative from "https://deno.land/x/esbuild@v0.14.51/mod.js";
+import * as esbuildWasm from "https://deno.land/x/esbuild@v0.14.51/wasm.js";
+import { denoPlugin } from "https://deno.land/x/esbuild_deno_loader@0.5.2/mod.ts";
+
 const esbuild: typeof esbuildWasm = Deno.run === undefined
   ? esbuildWasm
   : esbuildNative;
