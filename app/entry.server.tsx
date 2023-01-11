@@ -34,7 +34,7 @@ export function render(clientBundleUrl: string, reloadScriptUrl?: string) {
     <Document
       clientBundleUrl={clientBundleUrl}
       reloadScriptUrl={reloadScriptUrl}
-    />
+    />,
   );
   // inline initial styles
   return inline(html);

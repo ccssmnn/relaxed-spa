@@ -1,4 +1,3 @@
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import type { ReactNode } from "react";
 import {
   ActionFunctionArgs,
@@ -7,25 +6,19 @@ import {
   Form,
   Link,
   Route,
+  useActionData,
   useLoaderData,
   useNavigation,
   useRouteError,
 } from "react-router-dom";
-import type { AppRouter } from "../api/mod.ts";
-
-/** initialize trpc client with types from the API */
-export const trpc = createTRPCProxyClient<AppRouter>({
-  links: [
-    httpBatchLink({
-      url: "/api/trpc",
-    }),
-  ],
-});
+import { z } from "zod";
 
 // loader receives data when react-router is prerendering the page
 async function loader() {
-  const res = await trpc.getCount.query();
-  return { count: res.count };
+  const res = await fetch("/api/count");
+  const json = await res.json();
+  const { count } = z.object({ count: z.number() }).parse(json);
+  return { count };
 }
 
 // actions are executed when react-router forms are submitted, they
@@ -34,10 +27,12 @@ async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const intent = formData.get("intent");
   if (intent === "increment") {
-    await trpc.increment.mutate({ amount: 1 });
+    const { ok } = await fetch("/api/increment", { method: "POST" });
+    if (!ok) return { error: "Could not increment" };
   }
   if (intent === "decrement") {
-    await trpc.decrement.mutate({ amount: 1 });
+    const { ok } = await fetch("/api/decrement", { method: "POST" });
+    if (!ok) return { error: "Could not decrement" };
   }
   return null;
 }
@@ -56,6 +51,8 @@ function ExternalLink({ to, children }: { to: string; children: ReactNode }) {
 function App() {
   // receive data from loader
   const data = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const actionData = useActionData() as Awaited<ReturnType<typeof action>>;
+  const error = actionData?.error;
 
   // get access to react-router navigations
   const navigation = useNavigation();
@@ -77,6 +74,7 @@ function App() {
       />
       <h1 className="font-bold text-3xl">Super Relaxed SPA</h1>
       <p>The current count (on the server) is {data.count}</p>
+      {error && <p className="text-red-500">Error: {error}</p>}
       <Form method="post">
         <button
           className="px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 dark:text-gray-50 mr-3"

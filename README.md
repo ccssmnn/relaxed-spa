@@ -1,8 +1,11 @@
 # Relaxed SPA
 
-Modern tooling and web standards are so good. You might not need a framework to build a great SPA. Bring your own everything. Go anywhere.
+Modern tooling and web standards are so good. You might not need a framework to
+build a great SPA. Bring your own everything. Go anywhere.
 
-This should demonstrate how drastically tools like Deno & esbuild can simplify web development. Checkout the app at [relaxed-spa.deno.dev](https://relaxed-spa.deno.dev)
+This should demonstrate how drastically tools like Deno & esbuild can simplify
+web development. Checkout the app at
+[relaxed-spa.deno.dev](https://relaxed-spa.deno.dev)
 
 The main utilities are the bundling setup and the live reloading.
 
@@ -40,7 +43,6 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 - React Router (>= 6.4) has wonderful data loading APIs based on web
   fundamentals
 - twind enables TailwindCSS-style utility classes without a build step
-- trpc + zod gets us the typesafe API
 
 ## Caveats
 
@@ -52,9 +54,9 @@ How far can we get?
 
 - code splitting
 - example testing setup
-  - Component testing?
-  - End-to-End testing?
-- Add Supabase?
+  - Component testing
+  - End-to-End testing
+- Add Supabase
 
 ## License
 
