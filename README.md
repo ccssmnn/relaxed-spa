@@ -27,7 +27,6 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 - write the scripts you may need in typescript & execute in deno (think database
   seeding)
 - just-in-time client bundle generation (esbuild)
-- Tailwind-in-JS (no postcss / autoprefixer)
 - easily proxy or cache requests in deno and avoid cross origin requests (e.g.
   Supabase API requests)
 - Built in testing
@@ -40,9 +39,8 @@ Fully utilizing Deno, We can skip lots of tooling & vscode-extensions
 
 ## Used Libraries
 
-- React Router (>= 6.4) has wonderful data loading APIs based on web
-  fundamentals
-- twind enables TailwindCSS-style utility classes without a build step
+- React Router (>= 6.4) has wonderful data loading APIs based on web fundamentals
+- Stitches is a TypeScript ready CSS-in-JS library with excellent support for utilities and theming
 
 ## Caveats
 
