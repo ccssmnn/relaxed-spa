@@ -1,10 +1,8 @@
-import type { ReactNode } from "react";
 import {
   ActionFunctionArgs,
   createBrowserRouter,
   createRoutesFromElements,
   Form,
-  Link,
   Route,
   useActionData,
   useLoaderData,
@@ -12,6 +10,19 @@ import {
   useRouteError,
 } from "react-router-dom";
 import { z } from "zod";
+import {
+  Button,
+  Container,
+  Divider,
+  ExternalLink,
+  H1,
+  H2,
+  Img,
+  Li,
+  Link,
+  P,
+  Ul,
+} from "./ui.tsx";
 
 // loader receives data when react-router is prerendering the page
 async function loader() {
@@ -37,17 +48,6 @@ async function action({ request }: ActionFunctionArgs) {
   return null;
 }
 
-function ExternalLink({ to, children }: { to: string; children: ReactNode }) {
-  return (
-    <a
-      href={to}
-      className="text-indigo-600 dark:text-indigo-400 underline hover:text-indigo-500 dark:hover:text-indigo-200"
-    >
-      {children}
-    </a>
-  );
-}
-
 function App() {
   // receive data from loader
   const data = useLoaderData() as Awaited<ReturnType<typeof loader>>;
@@ -58,98 +58,108 @@ function App() {
   const navigation = useNavigation();
 
   // access current submission for loading states
-  const incrementing = navigation.state !== "idle" &&
+  const incrementing =
+    navigation.state !== "idle" &&
     navigation.formData?.get("intent") === "increment";
-  const decrementing = navigation.state !== "idle" &&
+  const decrementing =
+    navigation.state !== "idle" &&
     navigation.formData?.get("intent") === "decrement";
   const loading = incrementing || decrementing;
 
   // no useState / useEffect needed
   return (
-    <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
-      <img
+    <Container>
+      <Img
         src="/public/favicon.ico"
-        className="mx-auto w-48 h-48"
+        css={{
+          width: "$48",
+          height: "$48",
+          mx: "$auto",
+        }}
         alt="A cute white dinosaur on dark background looking to the left"
       />
-      <h1 className="font-bold text-3xl">Super Relaxed SPA</h1>
-      <p>The current count (on the server) is {data.count}</p>
-      {error && <p className="text-red-500">Error: {error}</p>}
+      <H1>Super Relaxed SPA</H1>
+      <P>The current count (on the server) is {data.count}</P>
+      {error && (
+        <P className="text-red-500" css={{ color: "$red500" }}>
+          Error: {error}
+        </P>
+      )}
       <Form method="post">
-        <button
-          className="px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 dark:text-gray-50 mr-3"
+        <Button
           name="intent"
           value="increment"
           type="submit"
           disabled={loading}
         >
           {incrementing ? "Loading..." : "Increment"}
-        </button>
-        <button
-          className="px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 dark:text-gray-50"
+        </Button>
+        <Button
           name="intent"
           value="decrement"
           type="submit"
           disabled={loading}
         >
           {decrementing ? "Loading..." : "Decrement"}
-        </button>
+        </Button>
       </Form>
-      <div className="border-t border-gray-900 dark:border-gray-50" />
-      <p>
+      <Divider />
+      <P>
         Modern tooling and web standards are so good. You might not need a
         framework to build a great SPA. Bring your own everything.
-      </p>
-      <h2 className="text-2xl font-semibold">What is going on here?</h2>
-      <p>
+      </P>
+      <H2>What is going on here?</H2>
+      <P>
         This is a React SPA with API Routes, written in TypeScript and deployed
         without a build step.
-      </p>
-      <ul className="list-disc text-left pl-6">
-        <li>
-          powered by <ExternalLink to="https://deno.com">Deno</ExternalLink>
-        </li>
-        <li>
+      </P>
+      <Ul css={{ listStyleType: "disc", paddingLeft: "$6" }}>
+        <Li>
+          powered by <ExternalLink href="https://deno.com">Deno</ExternalLink>
+        </Li>
+        <Li>
           using{" "}
-          <ExternalLink to="https://reactrouter.com">
+          <ExternalLink href="https://reactrouter.com">
             React Router's
           </ExternalLink>{" "}
           new data apis
-        </li>
-        <li>
+        </Li>
+        <Li>
           using TailwindCSS-like utility classes powered by{" "}
-          <ExternalLink to="https://twind.style">twind</ExternalLink>
-        </li>
-        <li>
+          <ExternalLink href="https://twind.style">twind</ExternalLink>
+        </Li>
+        <Li>
           while the client bundle is built on the fly with{" "}
-          <ExternalLink to="https://esbuild.github.io">esbuild</ExternalLink>
-        </li>
-      </ul>
-      <p>
+          <ExternalLink href="https://esbuild.github.io">esbuild</ExternalLink>
+        </Li>
+      </Ul>
+      <P>
         Checkout the source code on GitHub{" "}
-        <ExternalLink to="https://github.com/ccssmnn/relaxed-spa">
+        <ExternalLink href="https://github.com/ccssmnn/relaxed-spa">
           ccssmnn/relaxed-spa
         </ExternalLink>
-      </p>
-    </div>
+      </P>
+    </Container>
   );
 }
 
 function NotFoundElement() {
   return (
-    <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
-      <img src="/favicon.ico" className="mx-auto" />
-      <h1 className="font-bold text-3xl">404 - Not Found</h1>
-      <p>
-        Go back{" "}
-        <Link
-          to="/"
-          className="text-indigo-600 underline hover:text-indigo-500"
-        >
-          Home
-        </Link>
-      </p>
-    </div>
+    <Container>
+      <Img
+        src="/public/favicon.ico"
+        css={{
+          width: "$48",
+          height: "$48",
+          mx: "$auto",
+        }}
+        alt="A cute white dinosaur on dark background looking to the left"
+      />
+      <H1>404 - Not Found</H1>
+      <P>
+        Go back <Link to="/">Home</Link>
+      </P>
+    </Container>
   );
 }
 
@@ -157,21 +167,21 @@ function ErrorElement() {
   const error = useRouteError();
   console.error(error);
   return (
-    <div className="px-3 max-w-xl space-y-6 py-6 mx-auto text-center">
-      <img src="/favicon.ico" className="mx-auto" />
-      <h1 className="font-bold text-3xl text-red-600">
-        Ups, something went wrong
-      </h1>
-      <p>
-        Go back{" "}
-        <Link
-          to="/"
-          className="text-indigo-600 underline hover:text-indigo-500"
-        >
-          Home
-        </Link>
-      </p>
-    </div>
+    <Container>
+      <Img
+        src="/public/favicon.ico"
+        css={{
+          width: "$48",
+          height: "$48",
+          mx: "$auto",
+        }}
+        alt="A cute white dinosaur on dark background looking to the left"
+      />
+      <H1>Oops, something went wrong</H1>
+      <P>
+        Go back <Link to="/">Home</Link>
+      </P>
+    </Container>
   );
 }
 
@@ -180,6 +190,6 @@ export const router = createBrowserRouter(
     <Route errorElement={<ErrorElement />}>
       <Route path="/" element={<App />} loader={loader} action={action} />
       <Route path="*" element={<NotFoundElement />} />
-    </Route>,
-  ),
+    </Route>
+  )
 );

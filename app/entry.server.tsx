@@ -1,9 +1,6 @@
-import { inline, install } from "@twind/core";
 import { renderToString } from "react-dom/server";
-import config from "../twind.config.ts";
-
-// activate twind for using it to style the index.html
-install(config);
+import { getCssText } from "./stitches.config.ts";
+import { Body } from "./ui.tsx";
 
 /** this will not be hydrated */
 function Document(props: {
@@ -19,11 +16,23 @@ function Document(props: {
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         {props.reloadScriptUrl && <script src={props.reloadScriptUrl} />}
         <title>Relaxed SPA</title>
+        <link rel="stylesheet" href="/public/preflight.css" />
+        <style
+          id="stitches"
+          dangerouslySetInnerHTML={{ __html: getCssText() }}
+        />
       </head>
-      <body className="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white">
+      <Body
+        css={{
+          "@dark": {
+            backgroundColor: "$gray900",
+            color: "$gray100",
+          },
+        }}
+      >
         <div id="root"></div>
         <script src={props.clientBundleUrl}></script>
-      </body>
+      </Body>
     </html>
   );
 }
@@ -34,8 +43,8 @@ export function render(clientBundleUrl: string, reloadScriptUrl?: string) {
     <Document
       clientBundleUrl={clientBundleUrl}
       reloadScriptUrl={reloadScriptUrl}
-    />,
+    />
   );
   // inline initial styles
-  return inline(html);
+  return html;
 }
